@@ -2,13 +2,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.LowLevelPhysics2D.PhysicsShape;
 
-public class Bullet : MonoBehaviour
+public abstract class Bullet : MonoBehaviour
 {
-    [SerializeField] protected bool      _isLaunched;
-    [SerializeField] protected float     _activeTime    = 0;
-    [SerializeField] protected float     _maxActiveTime = 3;
-    [SerializeField] protected int       _speed         = 30;
-    [SerializeField] protected int       _damage;
+    [SerializeField] protected bool  _isLaunched;
+    [SerializeField] protected float _activeTime    = 0;
+    [SerializeField] protected float _maxActiveTime = 3;
+    [SerializeField] protected int   _speed         = 30;
+    [SerializeField] protected int   _damage;
 
     [SerializeField] protected Vector3 _rotationAngle = new Vector3(0, 0, 500);
 
@@ -24,7 +24,7 @@ public class Bullet : MonoBehaviour
     {
         if (!_isLaunched) return;
 
-        transform.Translate(Vector3.forward * _speed * Time.deltaTime);
+        Move();
 
         _activeTime += Time.deltaTime;
 
@@ -34,6 +34,8 @@ public class Bullet : MonoBehaviour
             return;
         }
     }
+
+    protected abstract void Move();
 
     protected void ReturnToPool()
     {

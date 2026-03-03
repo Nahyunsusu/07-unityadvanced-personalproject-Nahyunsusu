@@ -4,62 +4,77 @@ using UnityEngine.InputSystem.XR;
 
 public class _baseCharacter : MonoBehaviour
 {
-
     _baseDragon _dragon;
 
     // Camera
-    public Transform camTransform; // 시네머신 카메라
-    private Vector3 offset;
-    private Vector3 lastCamPosition;
+    public Transform _camTransform; // 시네머신 카메라
+    private Vector3 _offset;
+    private Vector3 _lastCamPosition;
 
     // Move Component
     private CharacterController _controller;
-    private InputAction moveAction;
+    private InputAction _moveAction;
 
-    private Vector2 moveInput;
-    private float speed = 15f;
+    private Vector2 _moveInput;
+    private float _speed = 15f;
 
     private void Awake()
     {
         _controller = GetComponent<CharacterController>();
-        moveAction = InputSystem.actions["Move"];    
+        _moveAction = InputSystem.actions["Move"];
+
+        if (GameObject.FindWithTag("MainCamera") != null)
+        {
+            _camTransform = GameObject.FindWithTag("MainCamera").transform;
+        }
     }
 
     private void Start()
     {
-        offset = transform.position - camTransform.position;
-        if (camTransform != null) lastCamPosition = camTransform.position;
+        _offset = transform.position - _camTransform.position;
+
+        if (_camTransform != null) 
+            _lastCamPosition = _camTransform.position;
     }
 
     private void OnEnable()
     {
-        moveAction.performed += OnMove;
-        moveAction.canceled  += MoveCancel;
+        _moveAction.performed += OnMove;
+        _moveAction.canceled  += MoveCancel;
 
     }
 
     private void OnDisable()
     {
-        moveAction.performed -= OnMove;
-        moveAction.canceled  -= MoveCancel;
+        _moveAction.performed -= OnMove;
+        _moveAction.canceled  -= MoveCancel;
 
     }
 
     private void Update()
     {
-        moveInput = moveAction.ReadValue<Vector2>();
+        _moveInput = _moveAction.ReadValue<Vector2>();
 
-        Vector3 playerMove = transform.right * moveInput.x + transform.forward * moveInput.y;
-        playerMove *= speed * Time.deltaTime;
+        // Move
+
+        Vector3 playerMove = Vector3.right * _moveInput.x + Vector3.forward * _moveInput.y;
+        playerMove *= _speed * Time.deltaTime;
 
         Vector3 cameraDelta = Vector3.zero;
-        if (camTransform != null)
+        if (_camTransform != null)
         {
-            cameraDelta = camTransform.position - lastCamPosition;
-            lastCamPosition = camTransform.position;
+            cameraDelta = _camTransform.position - _lastCamPosition;
+            _lastCamPosition = _camTransform.position;
         }
 
         _controller.Move(playerMove + cameraDelta);
+
+        // Rotate
+        float targetTilt = _moveInput.x * -30f;
+
+        Quaternion targetRotation = Quaternion.Euler(0, 0, targetTilt);
+
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, Time.deltaTime * 10f);
     }
 
     void LateUpdate()
@@ -74,10 +89,10 @@ public class _baseCharacter : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext ctx)
     {
-        moveInput = ctx.ReadValue<Vector2>();
+        _moveInput = ctx.ReadValue<Vector2>();
     }
     void MoveCancel(InputAction.CallbackContext ctx)
     {
-        moveInput = Vector2.zero;
+        _moveInput = Vector2.zero;
     }
 }

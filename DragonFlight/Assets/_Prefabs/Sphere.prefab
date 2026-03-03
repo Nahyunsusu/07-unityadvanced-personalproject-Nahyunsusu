@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 333348628528627242}
   - component: {fileID: 1780076982680588324}
   - component: {fileID: 2879560385064260755}
-  - component: {fileID: 4572047975487476751}
+  - component: {fileID: -2403792862660354574}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -145,7 +145,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4572047975487476751
+--- !u!114 &-2403792862660354574
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -154,12 +154,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4128300687123737219}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7b3bd9b692a7f44684e7d8d325a86e5, type: 3}
+  m_Script: {fileID: 11500000, guid: 3fbf7cb0d356f9d4ea0737ff0ec69c89, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Bullet
+  m_EditorClassIdentifier: Assembly-CSharp::Bullet_Straight
   _isLaunched: 0
   _activeTime: 0
-  _maxActiveTime: 5
+  _maxActiveTime: 3
   _speed: 30
   _damage: 0
   _rotationAngle: {x: 0, y: 0, z: 500}

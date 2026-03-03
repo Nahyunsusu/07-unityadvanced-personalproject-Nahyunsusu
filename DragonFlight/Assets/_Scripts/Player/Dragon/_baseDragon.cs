@@ -1,13 +1,23 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem; // 이 줄이 반드시 있어야 합니다!
 
+enum BulletType
+{
+    Straight,
+    Wide,
+    Guided
+}
+
 public class _baseDragon : MonoBehaviour
 {
+    // 스테이터스
     protected int LV;
     protected float _speed;
     protected float _damage;
 
-    private Muzzle[] _muzzles;
+    // 투사체
+    protected Muzzle[] _muzzles;
 
     private void Awake()
     {
@@ -30,7 +40,7 @@ public class _baseDragon : MonoBehaviour
     {
         if (_muzzles != null)
         {
-            foreach(Muzzle muzzle in _muzzles)
+            foreach (Muzzle muzzle in _muzzles)
             {
                 muzzle.LoadBullet();
             }
