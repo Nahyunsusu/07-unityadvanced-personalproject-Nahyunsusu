@@ -9,7 +9,7 @@ public class EnemyPool : MonoBehaviour
 
     private void Awake()
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 4; i++)
         {
             _pools[i] = new Stack<Enemy>(20);
         }

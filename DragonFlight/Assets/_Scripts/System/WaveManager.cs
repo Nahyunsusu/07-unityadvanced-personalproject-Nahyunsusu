@@ -9,8 +9,8 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private _baseCharacter _player;
 
     [Header("Spawn Settinig")]
-    [SerializeField] private float _spawnInterval = 1f;
-    [SerializeField] private float _laneWidth     = 1.5f;
+    [SerializeField] private float _spawnInterval = 2f;
+    [SerializeField] private float _laneWidth     = 9f;
     [SerializeField] private float _spawnY        = 10f;
 
     [Header("Stage Config")]
@@ -59,6 +59,6 @@ public class WaveManager : MonoBehaviour
 
     private int GetRandomLevelByStage()
     {
-        return Random.Range(0, 5);
+        return Random.Range(0, 4);
     }
 }

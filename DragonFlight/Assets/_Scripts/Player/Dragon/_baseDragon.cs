@@ -19,9 +19,18 @@ public class _baseDragon : MonoBehaviour
     // 투사체
     protected Muzzle[] _muzzles;
 
+    // Collider
+    private BoxCollider _boxCol;
+    public BoxCollider BoxCol => _boxCol;
+
     private void Awake()
     {
         _muzzles = GetComponentsInChildren<Muzzle>();
+    }
+
+    private void Start()
+    {
+        _boxCol = GetComponent<BoxCollider>();
     }
 
     private void Update()
@@ -35,6 +44,22 @@ public class _baseDragon : MonoBehaviour
             Shoot();
         }
     }
+
+    private void OnDrawGizmos()
+    {
+        if (_boxCol == null)
+            _boxCol = GetComponent<BoxCollider>();
+        if (_boxCol == null) return;
+
+        Gizmos.color = Color.green;
+
+        Matrix4x4 rotationMatrix = transform.localToWorldMatrix;
+        Gizmos.matrix = rotationMatrix;
+
+        Gizmos.DrawWireCube(_boxCol.center, _boxCol.size);
+    }
+
+    /////////////////////////////////////////////
 
     private void Shoot()
     {
