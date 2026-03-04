@@ -1,13 +1,15 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class WaveManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private EnemyPool _pool;
+    [SerializeField] private _baseCharacter _player;
 
     [Header("Spawn Settinig")]
-    [SerializeField] private float _spawnInterval = 3f;
+    [SerializeField] private float _spawnInterval = 1f;
     [SerializeField] private float _laneWidth     = 1.5f;
     [SerializeField] private float _spawnY        = 10f;
 
@@ -17,6 +19,14 @@ public class WaveManager : MonoBehaviour
     private void Start()
     {
         StartCoroutine(SpawnRoutine());
+    }
+
+    private void Update()
+    {
+        Vector3 targetPos = transform.position;
+        targetPos.z = transform.position.z + _player.CameraDelta.z;
+
+        transform.position = targetPos;
     }
 
     private IEnumerator SpawnRoutine()
@@ -39,7 +49,7 @@ public class WaveManager : MonoBehaviour
             if(enemy != null)
             {
                 float xPos = (i - 2) * _laneWidth;
-                enemy.transform.position = new Vector3(xPos, _spawnY, 0);
+                enemy.transform.position = new Vector3(xPos, _spawnY, transform.position.z + 20);
 
                 enemy.Init(10 * (level + 1), 5f);
                 enemy.gameObject.SetActive(true);

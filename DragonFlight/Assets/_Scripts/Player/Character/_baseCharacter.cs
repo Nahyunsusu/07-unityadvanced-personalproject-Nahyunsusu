@@ -11,6 +11,9 @@ public class _baseCharacter : MonoBehaviour
     private Vector3 _offset;
     private Vector3 _lastCamPosition;
 
+    private Vector3 _cameraDelta;
+    public Vector3 CameraDelta => _cameraDelta;
+
     // Move Component
     private CharacterController _controller;
     private InputAction _moveAction;
@@ -60,14 +63,14 @@ public class _baseCharacter : MonoBehaviour
         Vector3 playerMove = Vector3.right * _moveInput.x + Vector3.forward * _moveInput.y;
         playerMove *= _speed * Time.deltaTime;
 
-        Vector3 cameraDelta = Vector3.zero;
+        _cameraDelta = Vector3.zero;
         if (_camTransform != null)
         {
-            cameraDelta = _camTransform.position - _lastCamPosition;
+            _cameraDelta = _camTransform.position - _lastCamPosition;
             _lastCamPosition = _camTransform.position;
         }
 
-        _controller.Move(playerMove + cameraDelta);
+        _controller.Move(playerMove + _cameraDelta);
 
         // Rotate
         float targetTilt = _moveInput.x * -30f;

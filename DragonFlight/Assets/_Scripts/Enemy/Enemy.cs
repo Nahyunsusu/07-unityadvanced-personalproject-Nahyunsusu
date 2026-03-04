@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     [Header("Enemy Info")]
     [SerializeField] protected int _monsterLevel;
@@ -22,6 +22,11 @@ public abstract class Enemy : MonoBehaviour
 
     protected virtual void Update()
     {
+        if(gameObject.activeSelf)
+        {
+            transform.Translate(Vector3.back * _speed * Time.deltaTime);
+        }
+
         if (transform.position.y < -6f)
         {
             ReturnToPool();
