@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.LowLevelPhysics2D.PhysicsShape;
 
 public abstract class Bullet : MonoBehaviour
 {
@@ -46,15 +44,33 @@ public abstract class Bullet : MonoBehaviour
             {
                 enemy.TakeDamage(_damage);
             }
-
+            Debug.Log("충돌");
             ReturnToPool();
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (_col == null) _col = GetComponent<SphereCollider>();
+        if (_col == null) return;
+
+        Gizmos.color = Color.cyan;
+
+        Vector3 center = transform.TransformPoint(_col.center);
+
+        float lossyScale = Mathf.Max(transform.lossyScale.x, Mathf.Max(transform.lossyScale.y, transform.lossyScale.z));
+        float radius = _col.radius * lossyScale;
+
+        Gizmos.DrawWireSphere(center, radius);
     }
 
     public virtual void Launch()
     {
         _isLaunched = true;
         _activeTime = 0;
+
+        if (_col == null) _col = GetComponent<SphereCollider>();
+        if (_col != null) _col.isTrigger = true;
     }
 
     protected abstract void Move();
