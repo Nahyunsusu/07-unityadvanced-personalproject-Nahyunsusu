@@ -22,7 +22,7 @@ public abstract class Enemy : MonoBehaviour
     private void Start()
     {
         _boxCol = GetComponent<BoxCollider>();
-    }
+    }   
 
     protected virtual void Update()
     {

@@ -12,12 +12,13 @@ public abstract class Bullet : MonoBehaviour
 
     [SerializeField] protected Vector3 _rotationAngle = new Vector3(0, 0, 500);
 
+    private SphereCollider _col;
+
     public bool ActiveInHierarchy => gameObject.activeInHierarchy;
 
-    public virtual void Launch()
+    private void Start()
     {
-        _isLaunched = true;
-        _activeTime = 0;
+        _col = GetComponent<SphereCollider>();
     }
 
     protected virtual void Update()
@@ -33,6 +34,25 @@ public abstract class Bullet : MonoBehaviour
             ReturnToPool();
             return;
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            // 상대방(Enemy)의 컴포넌트를 가져와 데미지 입히기
+            // Enemy enemy = other.GetComponent<Enemy>();
+            // if(enemy != null) enemy.TakeDamage(_damage);
+
+            // 3. 충돌했으므로 총알은 풀로 반납
+            ReturnToPool();
+        }
+    }
+
+    public virtual void Launch()
+    {
+        _isLaunched = true;
+        _activeTime = 0;
     }
 
     protected abstract void Move();
