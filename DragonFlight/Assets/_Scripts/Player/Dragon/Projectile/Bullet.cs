@@ -40,11 +40,13 @@ public abstract class Bullet : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            // 상대방(Enemy)의 컴포넌트를 가져와 데미지 입히기
-            // Enemy enemy = other.GetComponent<Enemy>();
-            // if(enemy != null) enemy.TakeDamage(_damage);
+            Enemy enemy = other.GetComponent<Enemy>();
 
-            // 3. 충돌했으므로 총알은 풀로 반납
+            if (enemy != null)
+            {
+                enemy.TakeDamage(_damage);
+            }
+
             ReturnToPool();
         }
     }

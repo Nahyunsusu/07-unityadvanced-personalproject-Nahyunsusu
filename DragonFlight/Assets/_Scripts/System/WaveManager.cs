@@ -12,6 +12,7 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private float _spawnInterval = 2f;
     [SerializeField] private float _laneWidth     = 9f;
     [SerializeField] private float _spawnY        = 10f;
+    [SerializeField] private float _lifeTime      = 5f;
 
     [Header("Stage Config")]
     public int currentStage = 0;
@@ -51,7 +52,7 @@ public class WaveManager : MonoBehaviour
                 float xPos = (i - 2) * _laneWidth;
                 enemy.transform.position = new Vector3(xPos, _spawnY, transform.position.z + 20);
 
-                enemy.Init(10 * (level + 1), 20f);
+                enemy.Init(10 * (level + 1), 20f, _lifeTime);
                 enemy.gameObject.SetActive(true);
             }
         }
