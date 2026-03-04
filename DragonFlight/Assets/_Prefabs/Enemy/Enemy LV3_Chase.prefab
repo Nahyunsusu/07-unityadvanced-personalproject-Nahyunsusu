@@ -3999,7 +3999,7 @@ GameObject:
   - component: {fileID: 6309270069500337651}
   - component: {fileID: -1244782213159788899}
   m_Layer: 0
-  m_Name: Enemy LV3
+  m_Name: Enemy LV3_Chase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

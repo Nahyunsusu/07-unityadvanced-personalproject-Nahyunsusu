@@ -83,8 +83,6 @@ public class _baseCharacter : MonoBehaviour
         transform.position = targetWorldPos;
     }
 
-    
-
     //////////////////////////////////////////////////////
     public void OnMove(InputAction.CallbackContext ctx)
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
     // Info
     [Header("Enemy Info")]
@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
 
     // Stat
     [SerializeField] protected float _hp;
+    public float HP => _hp;
     [SerializeField] protected float _speed;
     [SerializeField] protected int   _score;
 
@@ -25,11 +26,10 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Update()
     {
-        if(gameObject.activeSelf)
-        {
-            transform.Translate(Vector3.back * _speed * Time.deltaTime, Space.World);
-        }
+    }
 
+    protected virtual void LateUpdate()
+    {
         if (transform.position.y < -6f)
         {
             ReturnToPool();
