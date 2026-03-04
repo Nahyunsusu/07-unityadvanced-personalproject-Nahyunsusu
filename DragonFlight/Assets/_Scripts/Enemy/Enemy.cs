@@ -14,9 +14,13 @@ public class Enemy : MonoBehaviour
 
     public System.Action<Enemy> OnReturnPool;
 
+    // Collider
+
     public virtual void Init(float hp, float speed)
     {
-        _hp    = hp;
+        transform.rotation = Quaternion.Euler(0, 180, 0);
+
+        _hp = hp;
         _speed = speed;
     }
 
@@ -24,7 +28,7 @@ public class Enemy : MonoBehaviour
     {
         if(gameObject.activeSelf)
         {
-            transform.Translate(Vector3.back * _speed * Time.deltaTime);
+            transform.Translate(Vector3.back * _speed * Time.deltaTime, Space.World);
         }
 
         if (transform.position.y < -6f)

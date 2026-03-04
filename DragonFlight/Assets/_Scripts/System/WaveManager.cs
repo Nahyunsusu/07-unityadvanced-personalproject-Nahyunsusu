@@ -51,7 +51,7 @@ public class WaveManager : MonoBehaviour
                 float xPos = (i - 2) * _laneWidth;
                 enemy.transform.position = new Vector3(xPos, _spawnY, transform.position.z + 20);
 
-                enemy.Init(10 * (level + 1), 5f);
+                enemy.Init(10 * (level + 1), 20f);
                 enemy.gameObject.SetActive(true);
             }
         }
