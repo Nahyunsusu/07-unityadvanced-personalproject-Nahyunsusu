@@ -1311,7 +1311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Lv2_Curve
   _monsterLevel: 2
-  _hp: 25
+  _hp: 40
   _speed: 0
   _score: 0
   _curveSpeed: 5

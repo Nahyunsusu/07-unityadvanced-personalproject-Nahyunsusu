@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyPool : MonoBehaviour
 {
-    [SerializeField] private Enemy[] _monsterOriginals;
+    [SerializeField] private Enemy[] _enemyPrefabs;
 
     private Dictionary<int, Stack<Enemy>> _pools = new Dictionary<int, Stack<Enemy>>();
 
@@ -17,9 +17,9 @@ public class EnemyPool : MonoBehaviour
 
     private Enemy CreateEnemy(int level)
     {
-        if (level < 0 || level >= _monsterOriginals.Length) return null;
+        if (level < 0 || level >= _enemyPrefabs.Length) return null;
 
-        Enemy newEnemy = Instantiate(_monsterOriginals[level], this.transform);
+        Enemy newEnemy = Instantiate(_enemyPrefabs[level], this.transform);
 
         newEnemy.OnReturnPool = PushToPool;
         newEnemy.gameObject.SetActive(false);
@@ -52,9 +52,12 @@ public class EnemyPool : MonoBehaviour
         {
             if (child.gameObject.activeSelf)
             {
-                child.gameObject.SetActive(false);
+                Enemy enemy = child.GetComponent<Enemy>();
+                if (enemy != null)
+                {
+                    enemy.TakeDamage(999999f); 
+                }
             }
         }
-        Debug.Log("모든 몬스터 필드에서 제거 완료");
     }
 } 

@@ -44,11 +44,6 @@ public abstract class Bullet : MonoBehaviour
             {
                 float beforeHP = enemy.HP;
                 enemy.TakeDamage(_damage);
-                Debug.Log($"[충돌] 적 감지! 이전 HP: {beforeHP} -> 현재 HP: {enemy.HP}");
-            }
-            else
-            {
-                Debug.LogError("적 태그는 맞는데 Enemy 스크립트를 찾을 수 없습니다!");
             }
 
             ReturnToPool();
@@ -70,10 +65,11 @@ public abstract class Bullet : MonoBehaviour
         Gizmos.DrawWireSphere(center, radius);
     }
 
-    public virtual void Launch()
+    public virtual void Launch(int damage)
     {
         _isLaunched = true;
         _activeTime = 0;
+        _damage = damage;
 
         if (_col == null) _col = GetComponent<SphereCollider>();
         if (_col != null) _col.isTrigger = true;

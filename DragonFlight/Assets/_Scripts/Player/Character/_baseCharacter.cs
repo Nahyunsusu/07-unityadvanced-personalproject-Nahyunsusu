@@ -5,7 +5,8 @@ using UnityEngine.InputSystem.XR;
 
 public class _baseCharacter : MonoBehaviour
 {
-    _baseDragon _dragon;
+    private _baseDragon _dragon;
+    public _baseDragon Dragon => _dragon;
 
     // Camera
     public Transform _camTransform; // 시네머신 카메라
@@ -24,7 +25,7 @@ public class _baseCharacter : MonoBehaviour
 
     // Stat
     private int   _hp                = 3;
-    private float _invincibilityTime = 10000;
+    private float _invincibilityTime = 2;
     private bool  _isInvincible      = false;
 
     // Collider
@@ -39,6 +40,7 @@ public class _baseCharacter : MonoBehaviour
     {
         _controller = GetComponent<CharacterController>();
         _moveAction = InputSystem.actions["Move"];
+        _dragon     = GetComponentInChildren<_baseDragon>();
 
         if (GameObject.FindWithTag("MainCamera") != null)
         {
@@ -106,14 +108,12 @@ public class _baseCharacter : MonoBehaviour
         {
             Enemy enemy = other.GetComponentInParent<Enemy>();
 
-            Debug.Log("적과 충돌! 무적 시작");
             _hp--;
 
             StartCoroutine(InvincibilityRoutine());
 
             if (_hp <= 0)
             {
-                Debug.Log("플레이어 사망");
                 if (UIManager.Instance != null)
                 {
                     UIManager.Instance.OnPlayerDie();
@@ -181,7 +181,6 @@ public class _baseCharacter : MonoBehaviour
         yield return new WaitForSeconds(_invincibilityTime);
 
         _isInvincible = false;
-        Debug.Log("무적 종료");
     }
 
     public void ResetPlayer()
@@ -194,7 +193,5 @@ public class _baseCharacter : MonoBehaviour
         StopAllCoroutines(); 
 
         if (_camTransform != null) _lastCamPosition = _camTransform.position;
-
-        Debug.Log("플레이어 스탯 및 위치 초기화 완료");
     }
 }

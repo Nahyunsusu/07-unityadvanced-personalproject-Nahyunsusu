@@ -4078,7 +4078,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Lv3_Curve
   _monsterLevel: 3
-  _hp: 25
+  _hp: 70
   _speed: 0
   _score: 0
 --- !u!1 &196352

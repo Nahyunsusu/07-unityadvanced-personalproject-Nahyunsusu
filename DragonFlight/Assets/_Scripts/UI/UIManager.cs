@@ -16,7 +16,8 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this; // 인스턴스 할당
+        Instance = this;
+
         ShowStartUI();
         _waveManager.enabled = false;
         Time.timeScale = 0;
@@ -63,7 +64,19 @@ public class UIManager : MonoBehaviour
 
         _inGamePanel.SetActive(false);
         _statPanel.SetActive(true);
-
-        Debug.Log("모든 시스템 초기화 및 스탯 화면 복귀");
     }
+
+    ///////////// Muzzle  /////////////////
+    public void OnMuzzlePlus()
+    {
+        _player.Dragon.PlusMuzzle();
+    }
+
+    public void OnMuzzleMinus()
+    {
+        _player.Dragon.MinusMuzzle();
+    }
+
+    ///////////// Damage  /////////////////
+
 }

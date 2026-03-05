@@ -81,6 +81,5 @@ public class WaveManager : MonoBehaviour
         }
 
         StartCoroutine(SpawnRoutine());
-        Debug.Log("웨이브 매니저 위치 초기화 완료");
     }
 }

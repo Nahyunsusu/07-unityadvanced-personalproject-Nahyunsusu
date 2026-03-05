@@ -1,56 +1,68 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.LowLevelPhysics2D.PhysicsShape;
 
 public class Muzzle : MonoBehaviour
 {
-    [SerializeField] private Bullet    _bullet;
-    [SerializeField] private int       _bulletPoolSize = 50;
-    [SerializeField] private Transform _FirePoint;
+    [System.Serializable]
+    public struct BulletInfo
+    {
+        public Bullet    Prefab;
+        public string    bulletName;
+        public int       poolSize;
+        public Transform firePoint;
+    }
 
-    private List<Bullet> _bullets = new List<Bullet>();
+    [SerializeField] private List<BulletInfo> _bulletInfo;
+
+    private List<List<Bullet>> _pools = new List<List<Bullet>>();
 
     private void Awake()
     {
-        for (int i = 0; i < _bulletPoolSize; i++)
+        for (int i = 0; i < _bulletInfo.Count; i++)
         {
-            Bullet tempObejct = Instantiate(_bullet);
-            tempObejct.SetActive(false);
-            _bullets.Add(tempObejct);
+            List<Bullet> newPool = new List<Bullet>();
+
+            for (int j = 0; j < _bulletInfo[i].poolSize; j++)
+            {
+                if (_bulletInfo[i].Prefab == null) continue;
+
+                Bullet temp = Instantiate(_bulletInfo[i].Prefab);
+                temp.SetActive(false);
+                newPool.Add(temp);
+            }
+            _pools.Add(newPool);
         }
     }
 
-    public void LoadBullet()
+    public void LoadBullet(int damage, int bulletIndex)
     {
-        Bullet _curBullet = GetPooledBullet();
+        if (bulletIndex < 0 || bulletIndex >= _pools.Count) return;
+
+        List<Bullet> targetPool = _pools[bulletIndex];
+        BulletInfo info = _bulletInfo[bulletIndex];
+
+        Bullet _curBullet = GetPooledBullet(targetPool, info.Prefab);
 
         if (_curBullet != null)
         {
-            _curBullet.transform.position = _FirePoint.position;
-            _curBullet.transform.rotation = _FirePoint.rotation;
-            _curBullet.SetActive(true);
+            _curBullet.transform.position = info.firePoint.position;
+            _curBullet.transform.rotation = info.firePoint.rotation;
 
-            Bullet bullet = _curBullet.GetComponent<Bullet>();
-            if (bullet != null)
-            {
-                bullet.Launch();
-            }
+            _curBullet.SetActive(true);
+            _curBullet.Launch(damage);
         }
     }
 
-    private Bullet GetPooledBullet()
+    private Bullet GetPooledBullet(List<Bullet> pool, Bullet prefab)
     {
-        foreach (Bullet bullet in _bullets)
+        foreach (Bullet bullet in pool)
         {
-            if (!bullet.ActiveInHierarchy)
-            {
-                return bullet;
-            }
+            if (!bullet.ActiveInHierarchy) return bullet;
         }
 
-        Bullet newRocket = Instantiate(_bullet);
-        newRocket.SetActive(false);
-        _bullets.Add(newRocket);
-        return newRocket;
+        Bullet newBullet = Instantiate(prefab);
+        newBullet.SetActive(false);
+        pool.Add(newBullet);
+        return newBullet;
     }
 }

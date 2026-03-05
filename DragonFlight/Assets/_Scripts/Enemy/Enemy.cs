@@ -45,7 +45,7 @@ public abstract class Enemy : MonoBehaviour
     {
         if (transform.position.y < -6f)
         {
-            ReturnToPool();
+            Die();
         }
     }
 
@@ -83,6 +83,8 @@ public abstract class Enemy : MonoBehaviour
 
         _isDead = true;
 
+        _hp = _maxHp;
+
         gameObject.SetActive(false);
         OnReturnPool?.Invoke(this);
     }
@@ -90,7 +92,6 @@ public abstract class Enemy : MonoBehaviour
     public virtual void TakeDamage(float damage)
     {
         _hp -= damage;
-        Debug.Log($"남은 체력 {_hp}");
 
         if(_hp <= 0)
         {
@@ -101,7 +102,5 @@ public abstract class Enemy : MonoBehaviour
     protected virtual void Die()
     {
         ReturnToPool();
-
-        _hp = _maxHp;
     }
 }
