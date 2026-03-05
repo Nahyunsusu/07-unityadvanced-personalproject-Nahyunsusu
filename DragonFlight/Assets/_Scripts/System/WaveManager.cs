@@ -16,6 +16,12 @@ public class WaveManager : MonoBehaviour
 
     [Header("Stage Config")]
     public int currentStage = 0;
+    private Vector3 _startPosition;
+
+    private void Awake()
+    {
+        _startPosition = transform.position;
+    }
 
     private void Start()
     {
@@ -52,14 +58,29 @@ public class WaveManager : MonoBehaviour
                 float xPos = (i - 2) * _laneWidth;
                 enemy.transform.position = new Vector3(xPos, _spawnY, transform.position.z + 20);
 
-                enemy.Init(10 * (level + 1), 20f, _lifeTime);
+                enemy.Init(enemy.HP, 20f, _lifeTime);
                 enemy.gameObject.SetActive(true);
             }
         }
-    }
+    }   
 
     private int GetRandomLevelByStage()
     {
         return Random.Range(0, 4);
+    }
+
+    public void ResetWaveManager()
+    {
+        transform.position = _startPosition;
+
+        StopAllCoroutines();
+
+        if (_pool != null)
+        {
+            _pool.ReturnAllEnemies();
+        }
+
+        StartCoroutine(SpawnRoutine());
+        Debug.Log("웨이브 매니저 위치 초기화 완료");
     }
 }

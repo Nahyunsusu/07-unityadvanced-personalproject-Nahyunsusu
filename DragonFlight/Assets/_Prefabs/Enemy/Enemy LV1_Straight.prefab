@@ -1304,7 +1304,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Lv1_Straight
   _monsterLevel: 1
-  _hp: 0
+  _hp: 25
   _speed: 0
   _score: 0
 --- !u!1 &139704

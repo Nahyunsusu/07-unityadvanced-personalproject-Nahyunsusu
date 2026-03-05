@@ -16,7 +16,7 @@ public abstract class Enemy : MonoBehaviour
     // 사망관리
     private float _currentLifeTime = 0f;
     private float _maxLifeTime     = 0f;
-    private bool _isDead           = false;
+    private bool  _isDead          = false;
 
     // Collider
     private BoxCollider _boxCol;
@@ -24,7 +24,7 @@ public abstract class Enemy : MonoBehaviour
 
     public System.Action<Enemy> OnReturnPool;
 
-    private void Start()
+    protected virtual void Start()
     {
         _boxCol = GetComponent<BoxCollider>();
     }   
@@ -32,6 +32,7 @@ public abstract class Enemy : MonoBehaviour
     protected virtual void Update()
     {
         _currentLifeTime += Time.deltaTime;
+
         if (_currentLifeTime >= _maxLifeTime)
         {
             ReturnToPool();
@@ -86,6 +87,7 @@ public abstract class Enemy : MonoBehaviour
     public virtual void TakeDamage(float damage)
     {
         _hp -= damage;
+        Debug.Log($"남은 체력 {_hp}");
 
         if(_hp <= 0)
         {

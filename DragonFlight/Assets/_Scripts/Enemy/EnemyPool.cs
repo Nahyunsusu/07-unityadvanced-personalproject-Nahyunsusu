@@ -19,10 +19,9 @@ public class EnemyPool : MonoBehaviour
     {
         if (level < 0 || level >= _monsterOriginals.Length) return null;
 
-        Enemy newEnemy = Instantiate(_monsterOriginals[level]);
+        Enemy newEnemy = Instantiate(_monsterOriginals[level], this.transform);
 
         newEnemy.OnReturnPool = PushToPool;
-
         newEnemy.gameObject.SetActive(false);
 
         return newEnemy;
@@ -45,5 +44,17 @@ public class EnemyPool : MonoBehaviour
         }
 
         return CreateEnemy(level);
+    }
+
+    public void ReturnAllEnemies()
+    {
+        foreach (Transform child in transform)
+        {
+            if (child.gameObject.activeSelf)
+            {
+                child.gameObject.SetActive(false);
+            }
+        }
+        Debug.Log("모든 몬스터 필드에서 제거 완료");
     }
 } 

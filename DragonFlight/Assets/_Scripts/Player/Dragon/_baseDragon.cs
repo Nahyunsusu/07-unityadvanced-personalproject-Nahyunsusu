@@ -45,19 +45,6 @@ public class _baseDragon : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        if (_boxCol == null)
-            _boxCol = GetComponent<BoxCollider>();
-        if (_boxCol == null) return;
-
-        Gizmos.color = Color.green;
-
-        Matrix4x4 rotationMatrix = transform.localToWorldMatrix;
-        Gizmos.matrix = rotationMatrix;
-
-        Gizmos.DrawWireCube(_boxCol.center, _boxCol.size);
-    }
 
     /////////////////////////////////////////////
 

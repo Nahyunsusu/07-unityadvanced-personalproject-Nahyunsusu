@@ -5,8 +5,8 @@ public abstract class Bullet : MonoBehaviour
     [SerializeField] protected bool  _isLaunched;
     [SerializeField] protected float _activeTime    = 0;
     [SerializeField] protected float _maxActiveTime = 3;
-    [SerializeField] protected int   _speed         = 30;
-    [SerializeField] protected int   _damage;
+    [SerializeField] protected int   _speed         = 60;
+    [SerializeField] protected int   _damage        = 5;
 
     [SerializeField] protected Vector3 _rotationAngle = new Vector3(0, 0, 500);
 
@@ -38,13 +38,19 @@ public abstract class Bullet : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            Enemy enemy = other.GetComponent<Enemy>();
+            Enemy enemy = other.GetComponentInParent<Enemy>();
 
             if (enemy != null)
             {
+                float beforeHP = enemy.HP;
                 enemy.TakeDamage(_damage);
+                Debug.Log($"[충돌] 적 감지! 이전 HP: {beforeHP} -> 현재 HP: {enemy.HP}");
             }
-            Debug.Log("충돌");
+            else
+            {
+                Debug.LogError("적 태그는 맞는데 Enemy 스크립트를 찾을 수 없습니다!");
+            }
+
             ReturnToPool();
         }
     }
