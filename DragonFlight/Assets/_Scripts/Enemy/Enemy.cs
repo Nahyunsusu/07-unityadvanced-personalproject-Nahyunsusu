@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
@@ -9,6 +10,7 @@ public abstract class Enemy : MonoBehaviour
 
     // Stat
     [SerializeField] protected float _hp;
+    private float _maxHp;
     public float HP => _hp;
     [SerializeField] protected float _speed;
     [SerializeField] protected int   _score;
@@ -67,6 +69,7 @@ public abstract class Enemy : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 180, 0);
 
         _hp              = hp;
+        _maxHp           = _hp;
         _speed           = speed;
 
         _maxLifeTime     = lifeTime;
@@ -98,5 +101,7 @@ public abstract class Enemy : MonoBehaviour
     protected virtual void Die()
     {
         ReturnToPool();
+
+        _hp = _maxHp;
     }
 }

@@ -24,7 +24,7 @@ public class _baseCharacter : MonoBehaviour
 
     // Stat
     private int   _hp                = 3;
-    private float _invincibilityTime = 2;
+    private float _invincibilityTime = 10000;
     private bool  _isInvincible      = false;
 
     // Collider

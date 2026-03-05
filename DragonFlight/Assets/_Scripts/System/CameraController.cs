@@ -3,16 +3,20 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    public static CameraController Instance;
+
     private CinemachineSplineDolly _splineDolly;
     private float _initialDollyPosition;
 
     [Header("Speed Settings")]
     public float currentSpeed = 0f;
-    public float acceleration = 1;
-    public float maxSpeed     = 20f;
+    public float acceleration = 5;
+    public float maxSpeed     = 200f;
 
     private void Awake()
     {
+        Instance = this;
+
         _splineDolly = GetComponent<CinemachineSplineDolly>();
 
         if (_splineDolly != null)

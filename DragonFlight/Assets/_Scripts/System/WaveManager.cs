@@ -68,7 +68,7 @@ public class WaveManager : MonoBehaviour
     {
         return Random.Range(0, 4);
     }
-
+    
     public void ResetWaveManager()
     {
         transform.position = _startPosition;

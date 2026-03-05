@@ -18,6 +18,10 @@ public class _baseDragon : MonoBehaviour
 
     // 투사체
     protected Muzzle[] _muzzles;
+    protected int _muzzleNum;
+
+    private float _fireRate = 0.2f; // 발사 간격 (초)
+    private float _lastFireTime;
 
     // Collider
     private BoxCollider _boxCol;
@@ -26,6 +30,7 @@ public class _baseDragon : MonoBehaviour
     private void Awake()
     {
         _muzzles = GetComponentsInChildren<Muzzle>();
+        _muzzleNum = 1;
     }
 
     private void Start()
@@ -37,25 +42,29 @@ public class _baseDragon : MonoBehaviour
     {
         if (Keyboard.current == null) return;
 
-        bool pressedJ = Keyboard.current.jKey.wasPressedThisFrame;
+        bool holdingJ = Keyboard.current.jKey.isPressed;
 
-        if(pressedJ)
+        if (holdingJ && Time.time >= _lastFireTime + _fireRate)
         {
             Shoot();
+            _lastFireTime = Time.time; 
         }
     }
-
-
-    /////////////////////////////////////////////
 
     private void Shoot()
     {
         if (_muzzles != null)
         {
-            foreach (Muzzle muzzle in _muzzles)
+            for(int i=0;i<_muzzleNum;i++)
             {
-                muzzle.LoadBullet();
+                _muzzles[i].LoadBullet();
             }
         }
     }
+
+    private void PlusMuzzle()
+    {
+        _muzzleNum++;
+    }
+
 }

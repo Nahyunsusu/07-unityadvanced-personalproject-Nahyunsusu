@@ -5,7 +5,7 @@ public abstract class Bullet : MonoBehaviour
     [SerializeField] protected bool  _isLaunched;
     [SerializeField] protected float _activeTime    = 0;
     [SerializeField] protected float _maxActiveTime = 3;
-    [SerializeField] protected int   _speed         = 60;
+    [SerializeField] protected int   _speed         = 40;
     [SerializeField] protected int   _damage        = 5;
 
     [SerializeField] protected Vector3 _rotationAngle = new Vector3(0, 0, 500);
