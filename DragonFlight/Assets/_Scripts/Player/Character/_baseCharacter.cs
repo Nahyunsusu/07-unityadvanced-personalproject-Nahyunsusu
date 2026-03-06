@@ -16,6 +16,8 @@ public class _baseCharacter : MonoBehaviour
     private Vector3 _cameraDelta;
     public Vector3 CameraDelta => _cameraDelta;
 
+    private bool _isLevelFinished = false;
+
     // Move Component
     private CharacterController _controller;
     private InputAction _moveAction;
@@ -155,9 +157,13 @@ public class _baseCharacter : MonoBehaviour
         _cameraDelta = Vector3.zero;
         if (_camTransform != null)
         {
-            _cameraDelta     = _camTransform.position - _lastCamPosition;
-
+            _cameraDelta = _camTransform.position - _lastCamPosition;
             _cameraDelta.y = 0;
+
+            if (!_isLevelFinished && _cameraDelta.sqrMagnitude < 0.00001f && transform.position.z > 100)
+            {
+                OnLevelClear();
+            }
 
             _lastCamPosition = _camTransform.position;
         }
@@ -193,5 +199,16 @@ public class _baseCharacter : MonoBehaviour
         StopAllCoroutines(); 
 
         if (_camTransform != null) _lastCamPosition = _camTransform.position;
+    }
+
+    private void OnLevelClear()
+    {
+        _isLevelFinished = true;
+        Debug.Log("카메라 정지 감지! 레벨 클리어!");
+
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.ShowClearUI(); // 예시
+        }
     }
 }

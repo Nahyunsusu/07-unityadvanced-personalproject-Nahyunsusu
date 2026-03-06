@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _startPanel;
     [SerializeField] private GameObject _statPanel;
     [SerializeField] private GameObject _inGamePanel;
+    [SerializeField] private GameObject _clearPanel;
 
     [Header("References")]
     [SerializeField] private WaveManager      _waveManager;
@@ -39,11 +40,26 @@ public class UIManager : MonoBehaviour
         StartGame();
     }
 
+    public void OnClickClearButton() // 엔딩화면 -> 스탯화면
+    {
+        OnPlayerDie();
+
+        _clearPanel.SetActive(false);
+         _statPanel.SetActive(true);
+    }
+
+    public void ShowClearUI()
+    {
+        _inGamePanel.SetActive(false);
+         _clearPanel.SetActive(true);
+    }
+
     public void ShowStartUI()
     {
          _startPanel.SetActive(true);
           _statPanel.SetActive(false);
         _inGamePanel.SetActive(false);
+         _clearPanel.SetActive(false);
     }
 
     public void StartGame()
@@ -63,7 +79,7 @@ public class UIManager : MonoBehaviour
         _waveManager.ResetWaveManager();
 
         _inGamePanel.SetActive(false);
-        _statPanel.SetActive(true);
+          _statPanel.SetActive(true);
     }
 
     ///////////// Muzzle  /////////////////
@@ -76,7 +92,4 @@ public class UIManager : MonoBehaviour
     {
         _player.Dragon.MinusMuzzle();
     }
-
-    ///////////// Damage  /////////////////
-
 }

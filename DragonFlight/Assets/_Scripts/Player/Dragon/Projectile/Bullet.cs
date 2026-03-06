@@ -4,7 +4,7 @@ public abstract class Bullet : MonoBehaviour
 {
     [SerializeField] protected bool  _isLaunched;
     [SerializeField] protected float _activeTime    = 0;
-    [SerializeField] protected float _maxActiveTime = 3;
+    [SerializeField] protected float _maxActiveTime = 10;
     [SerializeField] protected int   _speed         = 40;
     [SerializeField] protected int   _damage        = 5;
 
@@ -76,6 +76,14 @@ public abstract class Bullet : MonoBehaviour
     }
 
     protected abstract void Move();
+
+    protected void ApplyCameraMovement()
+    {
+        if (CameraController.Instance != null)
+        {
+            transform.position += Vector3.forward * CameraController.Instance.currentSpeed * Time.deltaTime;
+        }
+    }
 
     protected void ReturnToPool()
     {
